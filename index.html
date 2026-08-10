@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retail Stock Requirement Form</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Branch login gate -->
+<div class="login-overlay" id="loginScreen">
+  <div class="login-card">
+    <div class="titlebar">Retail Stock Requirement Form</div>
+    <div class="login-body">
+      <label for="loginUser">Username</label>
+      <input type="text" id="loginUser" autocomplete="username" placeholder="e.g. Bidar@Showoffff">
+      <label for="loginPass">Password</label>
+      <input type="password" id="loginPass" autocomplete="current-password" placeholder="Branch password">
+      <div class="login-error" id="loginError"></div>
+      <button class="btn" id="loginBtn">Login</button>
+    </div>
+  </div>
+</div>
+
+<div class="app" id="appScreen" style="display:none;">
+  <div class="titlebar">Retail Stock Requirement Form</div>
+  <div class="status-bar">
+    <span id="loggedInAs">Logged in as: -</span>
+    <span class="logout-link" id="logoutBtn">Logout</span>
+  </div>
+
+  <!-- Primary filter panel -->
+  <div class="panel">
+    <div class="row">
+      <div class="field">
+        <label for="branch">Branch</label>
+        <select id="branch">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="department">DEPARTMENT</label>
+        <select id="department">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="items">ITEMS</label>
+        <select id="items">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="reqQty">Required Qty</label>
+        <input type="number" id="reqQty" min="1" placeholder="Enter quantity">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field small">
+        <label for="reqDate">Date</label>
+        <input type="date" id="reqDate">
+      </div>
+      <div class="field">
+        <label for="remarks">Remarks</label>
+        <input type="text" id="remarks" placeholder="Optional note">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="checks">
+        <label><input type="checkbox" id="qtyChk" checked disabled> Qty</label>
+      </div>
+      <div class="buttons">
+        <button class="btn" id="addBtn">Add</button>
+        <button class="btn" id="printBtn">Print</button>
+        <button class="btn" id="exportBtn">Export</button>
+        <button class="btn" id="saveSheetBtn">Save to Sheet</button>
+        <button class="btn secondary" id="exitBtn">Exit</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toggle-wrap">
+    <span class="toggle-link" id="toggleMore">More Filters...</span>
+  </div>
+
+  <!-- Secondary / more filters panel -->
+  <div class="more-panel" id="morePanel" style="display:none;">
+    <div class="row">
+      <div class="field"><label for="category">CATEGORY</label>
+        <select id="category">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+      <div class="field"><label for="fit">FIT</label>
+        <select id="fit">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+      <div class="field"><label for="subItem">SUB_ITEM</label>
+        <select id="subItem">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field"><label for="subBrand">SubBrand</label>
+        <select id="subBrand">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+      <div class="field"><label for="color">Color</label>
+        <select id="color">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+      <div class="field"><label for="size">Size</label>
+        <select id="size">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field"><label for="fabric">FABRIC</label>
+        <select id="fabric">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+      <div class="field"><label for="fabDesign">FAB_DEsg</label>
+        <select id="fabDesign">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+      <div class="field"><label for="sleeve">SLEEVE</label>
+        <select id="sleeve">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field"><label for="neck">NECK</label>
+        <select id="neck">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+      <div class="field"><label for="length">LENGTH</label>
+        <select id="length">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+      <div class="field"><label for="sets">SETS</label>
+        <select id="sets">
+          <option value="">----Select----</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results / requirement list -->
+  <div class="results-wrap">
+    <div class="results-header">
+      <h2>Requirement List</h2>
+      <div class="summary-pills">
+        <span class="pill" id="rowCountPill">Rows: 0</span>
+        <span class="pill" id="totalQtyPill">Total Qty: 0</span>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table id="reqTable">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Branch</th>
+            <th>Department</th>
+            <th>Item</th>
+            <th>Category</th>
+            <th>Fit</th>
+            <th>Sub Item</th>
+            <th>SubBrand</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Fabric</th>
+            <th>Fab Design</th>
+            <th>Sleeve</th>
+            <th>Neck</th>
+            <th>Length</th>
+            <th>Sets</th>
+            <th>Date</th>
+            <th>Req Qty</th>
+            <th>Remarks</th>
+            <th>Photo</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="reqTableBody">
+          <tr class="empty-row"><td colspan="21">No requirement rows added yet. Fill the filters above and click "Add" to add a row.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Photo lightbox -->
+<div class="lightbox-overlay" id="photoLightbox">
+  <div class="lightbox-content">
+    <img id="lightboxImg" src="" alt="Counter photo">
+    <button id="lightboxClose">✕</button>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
