@@ -1,0 +1,19 @@
+{
+  "name": "stock-requirement-form",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Retail Stock Requirement Form - frontend, local dev backend, and Vercel serverless function.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "node local-dev-server.js",
+    "start": "node local-dev-server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "multer": "^2.0.1",
+    "sharp": "^0.34.5"
+  }
+}
